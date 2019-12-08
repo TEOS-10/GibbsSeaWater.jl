@@ -7,5 +7,13 @@ else
     println(GibbsSeaWater.gsw_rho(as, ct, pr))
 end
 
-# write your own tests here
-#@test 1 == 2
+# load test data
+include("gsw_check_data.jl")
+
+# check gsw functions
+
+@testset "Practical Salinity, PSS-78" begin
+    mask = isfinite.(c_from_sp)
+    @test GibbsSeaWater.gsw_c_from_sp.(sp,t,p)[mask] ≈ c_from_sp[mask] atol=c_from_sp_ca
+
+end
