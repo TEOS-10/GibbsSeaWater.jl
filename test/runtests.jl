@@ -16,4 +16,13 @@ include("gsw_check_data.jl")
     mask = isfinite.(c_from_sp)
     @test GibbsSeaWater.gsw_c_from_sp.(sp,t,p)[mask] ≈ c_from_sp[mask] atol=c_from_sp_ca
 
+#    mask = isfinite.(sp_from_c)
+#    @test GibbsSeaWater.gsw_sp_from_c.(c,t,p)[mask] ≈ sp_from_c[mask] atol=sp_from_c_ca
+
+    mask = isfinite.(sp_from_sk)
+    @test GibbsSeaWater.gsw_sp_from_sk.(sk)[mask] ≈ sp_from_sk[mask] atol=sp_from_sk_ca
+end
+
+@testset "Absolute Salinity, Preformed Salinity and Conservative Temperature" begin
+
 end
