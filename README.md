@@ -4,8 +4,11 @@ GibbsSeaWater.jl is a Julia wrapper for [GSW-C#master](https://github.com/TEOS-1
 
 ## Installation
 
+Start Julia and issue the following commands:
+
 ```julia
-pkg> add https://github.com/TEOS-10/GibbsSeaWater.jl
+using Pkg
+Pkg.add(PackageSpec(url="https://github.com/TEOS-10/GibbsSeaWater.jl"))
 ```
 
 ## About TEOS-10
