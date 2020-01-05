@@ -6,32 +6,43 @@ isfile(deps) ? include(deps) : error("GibbsSeaWater is not properly installed")
 include("gen_gswteos_h.jl")
 include("gen_gswteos10.jl")
 
-function gsw_specvol_alpha_beta(sa::Float64, ct::Float64, p::Float64)
-    specvol = Ref{Float64}()
-    alpha = Ref{Float64}()
-    beta = Ref{Float64}()
-    gsw_specvol_alpha_beta(sa,ct,p,specvol,alpha,beta)
-    return specvol[],alpha[],beta[]
+"""
+wrap a gsw function with `nin` input arguments and `nout` output arguments defined
+as references. All types are `Cdouble`.
+
+Expanded functions look like these:
+https://github.com/TEOS-10/GibbsSeaWater.jl/blob/9375647d97fe7cd54e11135a18e0c5447ddbed8c/src/GibbsSeaWater.jl#L17
+"""
+macro wr(name,nin,nout)
+    return Expr(:function,
+                Expr(:call,
+                     Symbol(:gsw_,name),
+                     (Expr(:(::),Symbol(:i,i),:Cdouble) for i = 1:nin)...),
+                Expr(:block,
+                     ( Expr(:(=),Symbol(:p,i),:(Ref{Cdouble}())) for i = 1:nout)...,
+                     Expr(:call,
+                          Symbol(:gsw_,name),
+                          (Symbol(:i,i) for i = 1:nin)..., (Symbol(:p,i) for i = 1:nout)...),
+                     Expr(:return,
+                          Expr(:tuple,
+                               (Expr(:ref,Symbol(:p,i)) for i = 1:nout)...
+                               )
+                          )
+                     )
+                )
 end
 
-function gsw_specvol_first_derivatives(sa::Cdouble, ct::Cdouble, p::Cdouble)
-    v_sa = Ref{Cdouble}()
-    v_ct = Ref{Cdouble}()
-    v_p = Ref{Cdouble}()
-    gsw_specvol_first_derivatives(sa, ct, p, v_sa, v_ct, v_p)
-    return v_sa[], v_ct[], v_p[]
-end
-
-function gsw_specvol_second_derivatives(sa::Cdouble, ct::Cdouble, p::Cdouble)
-    v_sa_sa = Ref{Cdouble}()
-    v_sa_ct = Ref{Cdouble}()
-    v_ct_ct = Ref{Cdouble}()
-    v_sa_p = Ref{Cdouble}()
-    v_ct_p = Ref{Cdouble}()
-
-    gsw_specvol_second_derivatives(sa, ct, p, v_sa_sa, v_sa_ct, v_ct_ct, v_sa_p, v_ct_p)
-    return v_sa_sa[], v_sa_ct[], v_ct_ct[], v_sa_p[], v_ct_p[]
-end
+#   function name                                nin nout
+@wr specvol_alpha_beta                           3   3
+@wr specvol_first_derivatives                    3   3
+@wr specvol_second_derivatives                   3   5
+@wr specvol_first_derivatives_wrt_enthalpy       3   2
+@wr specvol_second_derivatives_wrt_enthalpy      3   3
+@wr rho_alpha_beta                               3   3
+@wr rho_first_derivatives                        3   3
+@wr rho_second_derivatives                       3   5
+@wr rho_first_derivatives_wrt_enthalpy           3   2
+@wr rho_second_derivatives_wrt_enthalpy          3   3
 
 export gsw_add_barrier
 export gsw_add_mean
