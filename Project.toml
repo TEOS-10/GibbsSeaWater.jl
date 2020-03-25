@@ -1,7 +1,7 @@
 name = "GibbsSeaWater"
 uuid = "9a22fb26-0b63-4589-b28e-8f9d0b5c3d05"
-authors = ["Shinya Kouketsu <shinya.kouketsu@gmail.com>"]
-version = "1.0.0"
+authors = ["Shinya Kouketsu <shinya.kouketsu@gmail.com>", "Alexander Barth <barth.alexander@gmail.com>"]
+version = "0.1.0"
 
 [deps]
 BinaryProvider = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
@@ -10,5 +10,6 @@ Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+julia = "1"
 BinaryProvider = "0.5"
 Compat = "2, 3"
