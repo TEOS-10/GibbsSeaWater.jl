@@ -1,10 +1,13 @@
 module GibbsSeaWater
 
+using Compat
+
 deps = joinpath(dirname(dirname(pathof(GibbsSeaWater))), "deps", "deps.jl")
 isfile(deps) ? include(deps) : error("GibbsSeaWater is not properly installed")
 
 include("gen_gswteos_h.jl")
 include("gen_gswteos10.jl")
+include("wrappers.jl")
 
 """
 wrap a gsw function with `nin` input arguments and `nout` output arguments defined
@@ -13,19 +16,19 @@ as references. All types are `Cdouble`.
 Expanded functions look like these:
 https://github.com/TEOS-10/GibbsSeaWater.jl/blob/9375647d97fe7cd54e11135a18e0c5447ddbed8c/src/GibbsSeaWater.jl#L17
 """
-macro wr(name,nin,nout)
+macro wr(name, nin, nout)
     return Expr(:function,
                 Expr(:call,
-                     Symbol(:gsw_,name),
-                     (Expr(:(::),Symbol(:i,i),:Cdouble) for i = 1:nin)...),
+                     Symbol(:gsw_, name),
+                     (Expr(:(::), Symbol(:i, i), :Cdouble) for i = 1:nin)...),
                 Expr(:block,
-                     ( Expr(:(=),Symbol(:p,i),:(Ref{Cdouble}())) for i = 1:nout)...,
+                     ( Expr(:(=), Symbol(:p, i), :(Ref{Cdouble}())) for i = 1:nout)...,
                      Expr(:call,
-                          Symbol(:gsw_,name),
-                          (Symbol(:i,i) for i = 1:nin)..., (Symbol(:p,i) for i = 1:nout)...),
+                          Symbol(:gsw_, name),
+                          (Symbol(:i, i) for i = 1:nin)..., (Symbol(:p, i) for i = 1:nout)...),
                      Expr(:return,
                           Expr(:tuple,
-                               (Expr(:ref,Symbol(:p,i)) for i = 1:nout)...
+                               (Expr(:ref, Symbol(:p, i)) for i = 1:nout)...
                                )
                           )
                      )
