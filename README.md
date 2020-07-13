@@ -18,7 +18,7 @@ Pkg.add(PackageSpec(url="https://github.com/TEOS-10/GibbsSeaWater.jl"))
 
 ## Example
 
-One should the [vectorized "dot" operator](https://docs.julialang.org/en/v1/manual/mathematical-operations/#man-dot-operators-1) for arrays:
+For arrays, one should use the [vectorized "dot" operator](https://docs.julialang.org/en/v1/manual/mathematical-operations/#man-dot-operators-1):
 
 ```julia
 C = [45.8;34.7]
