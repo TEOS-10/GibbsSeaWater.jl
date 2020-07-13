@@ -16,6 +16,17 @@ using Pkg
 Pkg.add(PackageSpec(url="https://github.com/TEOS-10/GibbsSeaWater.jl"))
 ```
 
+## Example
+
+One should the [vectorized "dot" operator](https://docs.julialang.org/en/v1/manual/mathematical-operations/#man-dot-operators-1) for arrays:
+
+```julia
+C = [45.8;34.7]
+T = [28.9;22.8]
+P = [10.0;50.0]
+SP = gsw_sp_from_c.(C,T,P)
+```
+
 ## About TEOS-10
 
 Please check the [official site](http://www.teos-10.org) and [official repository](https://github.com/TEOS-10), which provide the official implementations (C/Fortran/Matlab/PHP) and the wrappers.
