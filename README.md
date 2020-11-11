@@ -1,6 +1,6 @@
-[![Build status Linux and macOS](https://travis-ci.org/TEOS-10/GibbsSeaWater.jl.svg?branch=master)](https://travis-ci.org/TEOS-10/GibbsSeaWater.jl)
+[![Build Status](https://github.com/TEOS-10/GibbsSeaWater.jl/workflows/CI/badge.svg)](https://github.com/TEOS-10/GibbsSeaWater.jl/actions)
 [![Build status Windows](https://ci.appveyor.com/api/projects/status/77kj4lug424x20y9/branch/master?svg=true)](https://ci.appveyor.com/project/Alexander-Barth/gibbsseawater-jl-ojx2d/branch/master)
-[![Coverage Status](https://coveralls.io/repos/TEOS-10/GibbsSeaWater.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/TEOS-10/GibbsSeaWater.jl?branch=master)
+[![codecov.io](http://codecov.io/github/TEOS-10/GibbsSeaWater.jl/coverage.svg?branch=master)](http://codecov.io/github/TEOS-10/GibbsSeaWater.jl?branch=master)
 
 
 # GibbsSeaWater.jl
