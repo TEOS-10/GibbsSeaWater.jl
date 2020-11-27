@@ -13,7 +13,7 @@ Start Julia and issue the following commands:
 
 ```julia
 using Pkg
-Pkg.add(PackageSpec(url="https://github.com/TEOS-10/GibbsSeaWater.jl"))
+Pkg.add("GibbsSeaWater")
 ```
 
 ## Example
