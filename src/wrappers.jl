@@ -1,5 +1,9 @@
-function gsw_z_from_p(p, lat)
-    return gsw_z_from_p(p, lat, 0.0, 0.0)
+function gsw_nsquared(sa::AbstractArray{T}, ct::AbstractArray{T}, p::AbstractArray{T}, lat::AbstractArray{T}) where {T <: Real}
+    n_levels = length(sa)
+    _res = Array{T}(undef, n_levels)
+    _pres = Array{T}(undef, n_levels)
+    gsw_nsquared(sa, ct, p, lat, n_levels, _res, _pres)  
+    return (_res, _pres)
 end
 
 function gsw_p_from_z(z, lat)
