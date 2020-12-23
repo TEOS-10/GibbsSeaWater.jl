@@ -1,7 +1,7 @@
 function gsw_nsquared(sa::AbstractArray{T}, ct::AbstractArray{T}, p::AbstractArray{T}, lat::AbstractArray{T}) where {T <: Real}
     n_levels = length(sa)
-    _res = Array{T}(undef, n_levels)
-    _pres = Array{T}(undef, n_levels)
+    _res = Array{T}(undef, n_levels - 1)
+    _pres = Array{T}(undef, n_levels - 1)
     gsw_nsquared(sa, ct, p, lat, n_levels, _res, _pres)  
     return (_res, _pres)
 end
