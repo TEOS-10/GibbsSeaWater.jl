@@ -1,0 +1,6 @@
+[general]
+library_name="libgswteos"
+output_file_path="tgen_gswteos10.jl"
+module_name="GibbsSeaWater"
+jll_pkg_name = "GibbsSeaWater_jll"
+export_symbol_prefixes = ["gsw_"]

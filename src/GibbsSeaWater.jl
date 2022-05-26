@@ -8,6 +8,7 @@ isfile(deps) ? include(deps) : error("GibbsSeaWater is not properly installed")
 include("gen_gswteos_h.jl")
 include("gen_gswteos10.jl")
 include("wrappers.jl")
+include("utils.jl")
 
 """
 wrap a gsw function with `nin` input arguments and `nout` output arguments defined
@@ -18,34 +19,34 @@ https://github.com/TEOS-10/GibbsSeaWater.jl/blob/9375647d97fe7cd54e11135a18e0c54
 """
 macro wr(name, nin, nout)
     return Expr(:function,
-                Expr(:call,
-                     Symbol(:gsw_, name),
-                     (Expr(:(::), Symbol(:i, i), :Cdouble) for i = 1:nin)...),
-                Expr(:block,
-                     ( Expr(:(=), Symbol(:p, i), :(Ref{Cdouble}())) for i = 1:nout)...,
-                     Expr(:call,
-                          Symbol(:gsw_, name),
-                          (Symbol(:i, i) for i = 1:nin)..., (Symbol(:p, i) for i = 1:nout)...),
-                     Expr(:return,
-                          Expr(:tuple,
-                               (Expr(:ref, Symbol(:p, i)) for i = 1:nout)...
-                               )
-                          )
-                     )
+        Expr(:call,
+            Symbol(:gsw_, name),
+            (Expr(:(::), Symbol(:i, i), :Cdouble) for i = 1:nin)...),
+        Expr(:block,
+            (Expr(:(=), Symbol(:p, i), :(Ref{Cdouble}())) for i = 1:nout)...,
+            Expr(:call,
+                Symbol(:gsw_, name),
+                (Symbol(:i, i) for i = 1:nin)..., (Symbol(:p, i) for i = 1:nout)...),
+            Expr(:return,
+                Expr(:tuple,
+                    (Expr(:ref, Symbol(:p, i)) for i = 1:nout)...
                 )
+            )
+        )
+    )
 end
 
 #   function name                                nin nout
-@wr specvol_alpha_beta                           3   3
-@wr specvol_first_derivatives                    3   3
-@wr specvol_second_derivatives                   3   5
-@wr specvol_first_derivatives_wrt_enthalpy       3   2
-@wr specvol_second_derivatives_wrt_enthalpy      3   3
-@wr rho_alpha_beta                               3   3
-@wr rho_first_derivatives                        3   3
-@wr rho_second_derivatives                       3   5
-@wr rho_first_derivatives_wrt_enthalpy           3   2
-@wr rho_second_derivatives_wrt_enthalpy          3   3
+@wr specvol_alpha_beta 3 3
+@wr specvol_first_derivatives 3 3
+@wr specvol_second_derivatives 3 5
+@wr specvol_first_derivatives_wrt_enthalpy 3 2
+@wr specvol_second_derivatives_wrt_enthalpy 3 3
+@wr rho_alpha_beta 3 3
+@wr rho_first_derivatives 3 3
+@wr rho_second_derivatives 3 5
+@wr rho_first_derivatives_wrt_enthalpy 3 2
+@wr rho_second_derivatives_wrt_enthalpy 3 3
 
 export gsw_add_barrier
 export gsw_add_mean
