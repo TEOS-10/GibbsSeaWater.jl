@@ -1,1 +1,3 @@
-gsw_f(latitude::T) where {T<:Real} = T(2) * T(7.292115e-5) * sin(latitude * pi / T(180.0))
+Base.@irrational Ωe 0.00007292115 big(0.00007292115)
+Ωe, const Omegae = Ωe
+gsw_f(latitude::T) where {T<:Real} = T(2) * Ωe * sind(latitude)
