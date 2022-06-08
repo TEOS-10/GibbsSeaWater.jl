@@ -1,9 +1,10 @@
 module GibbsSeaWater
 
 using Compat
+using GibbsSeaWater_jll
+using Libdl
 
-deps = joinpath(dirname(dirname(pathof(GibbsSeaWater))), "deps", "deps.jl")
-isfile(deps) ? include(deps) : error("GibbsSeaWater is not properly installed")
+const libgswteos = GibbsSeaWater_jll.libgswteos_path
 
 include("gen_gswteos_h.jl")
 include("gen_gswteos10.jl")
