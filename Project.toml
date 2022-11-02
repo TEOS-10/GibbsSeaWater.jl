@@ -1,7 +1,7 @@
 name = "GibbsSeaWater"
 uuid = "9a22fb26-0b63-4589-b28e-8f9d0b5c3d05"
 authors = ["Shinya Kouketsu <shinya.kouketsu@gmail.com>", "Alexander Barth <barth.alexander@gmail.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 #BinaryProvider = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
