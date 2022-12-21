@@ -1,6 +1,5 @@
 module GibbsSeaWater
 
-using Compat
 using GibbsSeaWater_jll
 using Libdl
 
