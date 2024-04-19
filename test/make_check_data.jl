@@ -1,6 +1,6 @@
-# Generate gsw_check_data.jl from the NetCDF file gsw_data_v3_0.nc
-# downloaded from https://raw.githubusercontent.com/TEOS-10/GSW-C/master/gsw_data_v3_0.nc
-# if it is not aleady present
+# Generate gsw_check_data.jl from the NetCDF file downloaded from
+# https://github.com/TEOS-10/GSW-C/raw/master/gsw_check_data.nc
+# https://github.com/TEOS-10/GSW-C/blob/bdf902e438bb242543492d4c8b7ef889e0d7685e/gsw_check_data.nc
 
 # The code is adapted from https://github.com/TEOS-10/GSW-C/blob/master/make_check_data.py
 
@@ -8,12 +8,14 @@ using NCDatasets
 
 datafile = joinpath(dirname(@__FILE__),"gsw_check_data.jl")
 
-fname = joinpath(dirname(@__FILE__),"gsw_data_v3_0.nc")
+fname = joinpath(dirname(@__FILE__),"gsw_check_data.nc")
 if !isfile(fname)
-    fname = download("https://raw.githubusercontent.com/TEOS-10/GSW-C/master/gsw_data_v3_0.nc")
+    fname = download("https://raw.githubusercontent.com/TEOS-10/GSW-C/master/gsw_check_data.nc")
 end
 
-ds = Dataset(fname)
+fname = joinpath(dirname(@__FILE__),"gsw_check_data.nc")
+
+ds = NCDataset(fname)
 
 work_vars = [
     ["ct", "CT_chck_cast"],
@@ -265,18 +267,19 @@ open(datafile,"w") do f
         if varname == ""
             varname = codename
         end
-
         codename = lowercase(codename)
-        data = ds[varname][:];
+        data = Array(ds[varname])
 
         print(f,"# $(varname)\n\n")
         print(f,"$(codename) = ")
         show(f,data)
         println(f,"\n")
 
-        ca = get(ds[varname].attrib,"computation_accuracy",nothing)
-        if ca != nothing
-            print(f,"$(codename)_ca = $(ca)")
+        varname_ca = varname * "_ca"
+        codename_ca = codename * "_ca"
+        if haskey(ds,varname_ca)
+            ca = ds[varname_ca][]
+            print(f,"$(codename_ca) = $(ca)")
             println(f)
         end
 

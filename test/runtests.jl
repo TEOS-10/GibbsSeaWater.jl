@@ -5,11 +5,6 @@
 # International Association for the Physical Sciences of the Oceans, Working Group 127).
 # https://github.com/TEOS-10/GSW-C/blob/95a9caeb128e4793b538b5ded889c83c913584fb/LICENSE
 
-
-# Tests marked with #need_update use outdated reference values from the netCDF file
-# see also:
-# https://github.com/TEOS-10/GSW-C/commit/e059acd5a84c432999e803f7fa9e5ace9b16d0ce
-
 using GibbsSeaWater
 using Test
 
@@ -50,8 +45,8 @@ c = gsw_c_from_sp.(sp,t,p)
 end
 
 @testset "Absolute Salinity, Preformed Salinity and Conservative Temperature" begin
-#need_update    @gswtest gsw_sa_from_sp.(sp,p,lon,lat) sa_from_sp
-#need_update    @gswtest gsw_sstar_from_sp.(sp,p,lon,lat) sstar_from_sp
+    @gswtest gsw_sa_from_sp.(sp,p,lon,lat) sa_from_sp
+    @gswtest gsw_sstar_from_sp.(sp,p,lon,lat) sstar_from_sp
     @gswtest gsw_ct_from_t.(sa,t,p) ct_from_t
 end
 
@@ -62,13 +57,13 @@ sstar = gsw_sstar_from_sa.(sa,p,lon,lat)
 pt = gsw_pt_from_ct.(sa,ct)
 entropy = gsw_entropy_from_pt.(sa,pt)
 @testset "Other conversions between Temperatures, Salinities, Entropy, Pressure and Height" begin
-#need_update	@gswtest gsw_deltasa_from_sp.(sp,p,lon,lat)  deltasa_from_sp
+	@gswtest gsw_deltasa_from_sp.(sp,p,lon,lat)  deltasa_from_sp
 	@gswtest gsw_sr_from_sp.(sp) sr_from_sp
 	@gswtest gsw_sp_from_sr.(sr) sp_from_sr
-#need_update	@gswtest gsw_sp_from_sa.(sa,p,lon,lat) sp_from_sa
-#need_update	@gswtest gsw_sstar_from_sa.(sa,p,lon,lat) sstar_from_sa
+	@gswtest gsw_sp_from_sa.(sa,p,lon,lat) sp_from_sa
+	@gswtest gsw_sstar_from_sa.(sa,p,lon,lat) sstar_from_sa
 	@gswtest gsw_sa_from_sstar.(sstar,p,lon,lat)  sa_from_sstar
-#need_update	@gswtest gsw_sp_from_sstar.(sstar,p,lon,lat)  sp_from_sstar
+	@gswtest gsw_sp_from_sstar.(sstar,p,lon,lat)  sp_from_sstar
 	@gswtest gsw_pt_from_ct.(sa,ct) pt_from_ct
 	@gswtest gsw_t_from_ct.(sa,ct,p) t_from_ct
 	@gswtest gsw_ct_from_pt.(sa,pt) ct_from_pt
@@ -93,16 +88,16 @@ end
 	@gswtest gsw_alpha_on_beta.(sa,ct,p) alpha_on_beta
     @gswtest gsw_specvol_alpha_beta.(sa,ct,p) v_vab alpha_vab beta_vab
 	@gswtest gsw_specvol_first_derivatives.(sa,ct,p) v_sa v_ct v_p
-#need_update	@gswtest gsw_specvol_second_derivatives.(sa,ct,p) v_sa_sa v_sa_ct v_ct_ct v_sa_p v_ct_p
+	@gswtest gsw_specvol_second_derivatives.(sa,ct,p) v_sa_sa v_sa_ct v_ct_ct v_sa_p v_ct_p
 	@gswtest gsw_specvol_first_derivatives_wrt_enthalpy.(sa,ct,p) v_sa_wrt_h v_h
-#need_update	@gswtest gsw_specvol_second_derivatives_wrt_enthalpy.(sa,ct,p) v_sa_sa_wrt_h  v_sa_h v_h_h
+	@gswtest gsw_specvol_second_derivatives_wrt_enthalpy.(sa,ct,p) v_sa_sa_wrt_h  v_sa_h v_h_h
 	@gswtest gsw_specvol_anom_standard.(sa,ct,p) specvol_anom_standard
 	@gswtest gsw_rho.(sa,ct,p) rho
 	@gswtest gsw_rho_alpha_beta.(sa,ct,p) rho_rab alpha_rab beta_rab
 	@gswtest gsw_rho_first_derivatives.(sa,ct,p) rho_sa rho_ct rho_p
-#need_update	@gswtest gsw_rho_second_derivatives.(sa,ct,p) rho_sa_sa rho_sa_ct rho_ct_ct rho_sa_p rho_ct_p
+	@gswtest gsw_rho_second_derivatives.(sa,ct,p) rho_sa_sa rho_sa_ct rho_ct_ct rho_sa_p rho_ct_p
 	@gswtest gsw_rho_first_derivatives_wrt_enthalpy.(sa,ct,p) rho_sa_wrt_h rho_h
-#need_update	@gswtest gsw_rho_second_derivatives_wrt_enthalpy.(sa,ct,p) rho_sa_sa_wrt_h rho_sa_h rho_h_h
+	@gswtest gsw_rho_second_derivatives_wrt_enthalpy.(sa,ct,p) rho_sa_sa_wrt_h rho_sa_h rho_h_h
 #=
 	@gswtest gsw_sigma0.(sa,ct), value,sigma0);
 	@gswtest gsw_sigma1.(sa,ct), value,sigma1);
