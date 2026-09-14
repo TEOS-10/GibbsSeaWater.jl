@@ -6,6 +6,11 @@
 
 GibbsSeaWater.jl is a Julia wrapper for [GSW-C](https://github.com/TEOS-10/GSW-C/), which is the C implementation of the Thermodynamic Equation of Seawater 2010 (TEOS-10).
 
+
+> [!IMPORTANT]
+> The wrapper GibbsSeaWater.jl is [licensed under the MIT](https://github.com/TEOS-10/GibbsSeaWater.jl/blob/master/LICENSE.md) but note that the underlying [GSW-C does not permit redistribution of the modified code](https://github.com/TEOS-10/GSW-C/blob/db75c391137173a0e121166e787fcc15fc3c3e7f/LICENSE#L8). 
+
+
 ## Installation
 
 Start Julia and issue the following commands:
